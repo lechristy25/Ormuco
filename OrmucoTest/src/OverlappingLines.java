@@ -32,7 +32,7 @@ public class OverlappingLines {
             for(int i = 0; i<2; i++) line2[i] = Integer.parseInt(st.nextToken()); 
         }
         
-        //format the arrays so that the smaller coordinate appears first, check for negative inputs.
+        //format the arrays so that the smaller coordinate appears first.
         minMaxFormatting(line1);
         minMaxFormatting(line2);
         
@@ -44,14 +44,11 @@ public class OverlappingLines {
         
 	/**
 	 * minMaxFormatting: Formats the array so that the smaller coordinate appears first. 
-	 * 					 Checks for negative inputs 
 	 * @param coords - array of coordinates
 	 * @return formatted array of coordinates
 	 */
 	  public static int[] minMaxFormatting(int[] coords) {
-		  	if (coords[0] < 0 || coords[1] < 0) 
-		  		throw new IllegalArgumentException("Coordinates cannot be negative");
-		  	else if (coords[0] > coords[1]) {
+		  	 if (coords[0] > coords[1]) {
 	    		int temp = coords[1];
 	    		coords[1] = coords[0]; 
 	    		coords[0] = temp;
