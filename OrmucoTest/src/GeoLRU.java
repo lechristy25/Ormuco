@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,7 +27,8 @@ public class GeoLRU {
 	
 	DLNode head;
 	DLNode tail; 
-	private static Map<Integer, DLNode> hashmap = new HashMap<Integer, DLNode>(); //init hashmap
+	private static Map<Integer, DLNode> hashmap = new ConcurrentHashMap<Integer, DLNode>(); //ConcurrentHashMap used so that the expiry thead can iterate over
+	                                                                                        //the map concurrently and avoid ConcurrentModificationException
 	
 	int capacity; //user defined cache capacity
 	static int itemTotal;
@@ -115,13 +118,20 @@ public class GeoLRU {
 	      public void run() {
 	        try {
 	          while (true) {
-	        	  for(DLNode node: hashmap.values()) deleteIfExpired(node);
+	        	  System.out.println("thread running");
+	        	  for(DLNode node: hashmap.values()) {
+	        		  deleteIfExpired(node);
+	        		  
+	        	  }
+	        	  Thread.sleep(100);
 	          }
+	          
 	        } catch (Exception e) {
 	          e.printStackTrace();
 	        }
 	      }
 	    }).start();
 	  }
+	
 	
 }
