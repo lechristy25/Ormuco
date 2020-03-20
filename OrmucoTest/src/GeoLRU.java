@@ -118,7 +118,6 @@ public class GeoLRU {
 	      public void run() {
 	        try {
 	          while (true) {
-	        	  System.out.println("thread running");
 	        	  for(DLNode node: hashmap.values()) {
 	        		  deleteIfExpired(node);
 	        		  
